@@ -12,13 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Install Lua & luacheck
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y luarocks
-          sudo luarocks install luacheck
-      - name: Run luacheck
-        run: luacheck ./
+      - uses: 0001-0110/Factools/code-analysis@dev
 
   style:
     runs-on: ubuntu-latest
