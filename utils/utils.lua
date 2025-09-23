@@ -55,8 +55,8 @@ function utils.create_prototype(prototype_data)
 end
 
 --- @param capsule data.CapsulePrototype
---- @return data.ProjectilePrototype
-function utils.get_projectile(capsule)
+--- @return data.ProjectileTriggerDelivery
+function utils.get_projectile_action_delivery(capsule)
     local _, action_delivery = Stream.of(capsule.capsule_action.attack_parameters.ammo_type.action)
         :flat_map(function(action)
             return Stream.of(action.action_delivery):to_table()
@@ -64,7 +64,13 @@ function utils.get_projectile(capsule)
         :first_or_default(function(_, action_delivery)
             return action_delivery.projectile and data.raw["projectile"][action_delivery.projectile]
         end)
+    return action_delivery
+end
 
+--- @param capsule data.CapsulePrototype
+--- @return data.ProjectilePrototype
+function utils.get_projectile(capsule)
+    local action_delivery = utils.get_projectile_action_delivery(capsule)
     return action_delivery and data.raw["projectile"][action_delivery.projectile]
 end
 

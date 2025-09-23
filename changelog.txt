@@ -1,4 +1,10 @@
 ---------------------------------------------------------------------------------------------------
+Version: 1.4.7
+Date: 2025-09-23
+  Bugfixes:
+    - Fixed personnal combat robot not following the player
+    - Fixed an error on loading introduced by 2.0.67
+---------------------------------------------------------------------------------------------------
 Version: 1.4.6
 Date: 2025-09-05
   Changes:
