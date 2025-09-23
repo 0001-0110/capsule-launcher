@@ -24,14 +24,19 @@ local function create_idle_combat_robot(combat_robot)
 end
 
 --- Change the projectile to spawn the idle combat robot instead of the normal one
---- @param projectile data.ProjectilePrototype
+--- @param capsule data.CapsulePrototype
 --- @param combat_robot data.CombatRobotPrototype
-local function update_projectile_combat_robot(projectile, combat_robot)
+--- @return data.ProjectilePrototype
+local function replace_projectile(capsule, combat_robot)
+    local projectile = table.deepcopy(utils.get_projectile(capsule))
+    projectile.name = utils.prefix(projectile.name)
     local _, projectile_effect = Stream.of(projectile.action.action_delivery.target_effects)
         :first(function(_, target_effect)
             return utils.is_combat_robot_effect(target_effect)
         end)
     projectile_effect.entity_name = combat_robot.name
+    utils.get_projectile_action_delivery(capsule).projectile = projectile.name
+    return projectile
 end
 
 local combat_robot_ammo_factory = {}
@@ -43,8 +48,9 @@ function combat_robot_ammo_factory.create_combat_robot_ammo_prototypes(combat_ro
     combat_robot_capsule = table.deepcopy(combat_robot_capsule)
     local combat_robot_prototype = get_combat_robot_prototype(utils.get_projectile(combat_robot_capsule))
     local idle_combat_robot = create_idle_combat_robot(combat_robot_prototype)
-    update_projectile_combat_robot(utils.get_projectile(combat_robot_capsule), idle_combat_robot)
+    local projectile = replace_projectile(combat_robot_capsule, idle_combat_robot)
     local prototypes = ammo_factory.create_ammo_prototypes(combat_robot_capsule)
+    table.insert(prototypes, projectile)
     table.insert(prototypes, idle_combat_robot)
     return prototypes
 end
