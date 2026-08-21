@@ -5,18 +5,21 @@ steps:
 
   - name:
     image: nickblah/lua:5.5.1-luarocks
+    depends_on: []
     commands:
-      - apt install gcc
+      - apt update && apt install gcc -y
       - luarocks install luacheck
       - luacheck ./
 
   - name:
     image: rust:1.98.0-slim
+    depends_on: []
     commands:
       - cargo install stylua
       - stylua --check ./
 
   - name: validate mod structure
     image: python:3.10.21-alpine3.24
+    depends_on: []
     commands:
       - python ci/validate.py
