@@ -1,0 +1,22 @@
+when:
+  - event: push
+
+steps:
+
+  - name:
+    image: nickblah/lua:5.5.1-luarocks
+    steps:
+      - apt install gcc
+      - luarocks install luacheck
+      - luacheck ./
+
+  - name:
+    image: rust:1.98.0-slim
+    steps:
+      - cargo install stylua
+      - stylua --check ./
+
+  - name: validate mod structure
+    image: python:3.10.21-alpine3.24
+    steps:
+      - python ci/validate.py
