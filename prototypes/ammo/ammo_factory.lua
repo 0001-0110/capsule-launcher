@@ -46,7 +46,7 @@ end
 local function create_recipe_prototype(capsule_name, result_item)
     return {
         name = utils.prefix(capsule_name .. "-ammo"),
-        localised_name = { "recipe-name.22_cl_capsule-ammo", { "item-name.grenade" } },
+        localised_name = { "recipe-name.22_cl_capsule-ammo", { "item-name." .. capsule_name } },
         type = "recipe",
         enabled = false,
         energy_required = 4,
