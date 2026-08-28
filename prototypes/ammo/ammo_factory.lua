@@ -50,7 +50,7 @@ local function create_recipe_prototype(capsule_name, result_item)
         type = "recipe",
         enabled = false,
         energy_required = 4,
-        hide_from_player_crafting = true,
+        categories = { "advanced-crafting" },
         ingredients = {
             {
                 type = "item",

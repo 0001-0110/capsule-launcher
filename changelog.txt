@@ -4,6 +4,7 @@ Date: TODO
   Changes:
     - Bumped factorio version to 2.1
   Bugfixes:
+    - Fixed capsule ammo tooltip saying that the recipe was craftable by hand
     - Fixed all capsule ammo recipe names being called "grenade ammo"
 ---------------------------------------------------------------------------------------------------
 Version: 1.4.7
