@@ -4,10 +4,10 @@ when:
 steps:
 
   - name: code-analysis
-    image: nickblah/lua:5.5.1-luarocks
+    image: ubuntu:26.10
     depends_on: []
     commands:
-      - apt update && apt install gcc -y
+      - apt update && apt install luarocks -y
       - luarocks install luacheck
       - luacheck ./
 
