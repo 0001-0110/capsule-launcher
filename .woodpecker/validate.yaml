@@ -3,7 +3,7 @@ when:
 
 steps:
 
-  - name:
+  - name: code-analysis
     image: nickblah/lua:5.5.1-luarocks
     depends_on: []
     commands:
@@ -11,7 +11,7 @@ steps:
       - luarocks install luacheck
       - luacheck ./
 
-  - name:
+  - name: style
     image: rust:1.98.0-slim
     depends_on: []
     commands:

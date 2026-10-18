@@ -17,7 +17,7 @@ if ("--dry-run" in sys.argv):
     print(f"Will upload {filepath} using the name {modname}")
     sys.exit(0)
 
-apikey = getenv("MOD_UPLOAD_API_KEY")
+apikey = getenv("MOD_PORTAL_API_KEY")
 if (apikey is None):
     print("Missing api key")
     sys.exit(2)
