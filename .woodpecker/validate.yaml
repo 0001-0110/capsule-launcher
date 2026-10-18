@@ -22,4 +22,5 @@ steps:
     image: python:3.10.21-alpine3.24
     depends_on: []
     commands:
+      - apk add jq
       - ./ci/validate_mod_structure.sh $(CI_COMMIT_TAG)
