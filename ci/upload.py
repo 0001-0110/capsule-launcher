@@ -3,41 +3,75 @@ import sys
 import requests
 from os import getenv
 
+mod_portal_url = "https://mods.factorio.com"
+init_upload_url = f"{mod_portal_url}/api/v2/mods/releases/init_upload"
+details_url = f"{mod_portal_url}/api/v2/mods/edit_details"
+
+
+class UnknownModException(Exception):
+    pass
+
+
 def get_mod_name():
     with open("info.json") as info_file:
         return json.load(info_file)["name"]
 
-MOD_PORTAL_URL = "https://mods.factorio.com"
-INIT_UPLOAD_URL = f"{MOD_PORTAL_URL}/api/v2/mods/releases/init_upload"
 
-modname = get_mod_name()
-filepath = sys.argv[1]
+def get_api_key():
+    return getenv("MOD_PORTAL_API_KEY")
 
-if ("--dry-run" in sys.argv):
-    print(f"Will upload {filepath} using the name {modname}")
-    sys.exit(0)
 
-apikey = getenv("MOD_PORTAL_API_KEY")
-if (apikey is None):
-    print("Missing api key")
-    sys.exit(2)
+def get_headers():
+    api_key = get_api_key()
+    if (api_key is None):
+        raise Exception("Missing API key")
+    return {"Authorization": f"Bearer {api_key}"}
 
-request_body = {"mod": modname}
-request_headers = {"Authorization": f"Bearer {apikey}"}
-response = requests.post(INIT_UPLOAD_URL, data=request_body, headers=request_headers)
 
-if not response.ok:
-    print(f"init_upload failed: {response.text}")
-    sys.exit(1)
+def finish_upload(file_path, init_response):
+    upload_url = init_response.json()["upload_url"]
+    with open(file_path, "rb") as file:
+        request_body = {"file": file}
+        response = requests.post(upload_url, files=request_body)
+        if not response.ok:
+            raise Exception(f"upload failed: {response.text}")
 
-upload_url = response.json()["upload_url"]
 
-with open(filepath, "rb") as file:
-    request_body = {"file": file}
-    response = requests.post(upload_url, files=request_body)
+def update_mod(file_path):
+    mod_name = get_mod_name()
+    request_body = {"mod": mod_name}
+    request_headers = get_headers()
+    response = requests.post(init_upload_url, data=request_body, headers=request_headers)
+    if not response.ok:
+        match response.json()["error"]:
+            case "UnknownMod":
+                raise UnknownModException()
+            case _:
+                raise Exception(f"init_upload failed: {response.text}")
+    finish_upload(file_path, response)
 
-if not response.ok:
-    print(f"upload failed: {response.text}")
-    sys.exit(1)
 
-print(f"upload successful: {response.text}")
+def publish_mod(file_path):
+    mod_name = get_mod_name()
+    request_headers = get_headers()
+    with open("README.md", "rb") as file:
+        request_body = {"mod": mod_name, "description": file.read()}
+    response = requests.post(details_url, data=request_body, headers=request_headers)
+    if not response.ok:
+        raise Exception()
+    finish_upload(file_path)
+
+
+def upload():
+    file_path = sys.argv[1]
+
+    try:
+        response = update_mod(file_path)
+    except UnknownModException:
+        publish_mod(file_path)
+
+    print(f"upload successful: {response.text}")
+
+
+if __name__ == "__main__":
+    upload()

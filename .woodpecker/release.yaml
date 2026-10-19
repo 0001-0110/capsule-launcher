@@ -1,8 +1,6 @@
 when:
   - event: tag
     branch: main
-  - event: push
-    branch: woodpecker
 
 depends_on:
   - validate
@@ -28,4 +26,4 @@ steps:
         from_secret: mod_portal_api_key
     commands:
       - pip install requests
-      #- python .github/upload.py
+      - python .github/upload.py
