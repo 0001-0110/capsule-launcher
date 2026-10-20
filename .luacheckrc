@@ -1,20 +1,20 @@
 std = {
-    globals = {
-        "require",
-        "type",
-        "string",
-        "table",
-        "pairs",
-        "ipairs",
-        "math",
-        "error",
+  globals = {
+    "require",
+    "type",
+    "string",
+    "table",
+    "pairs",
+    "ipairs",
+    "math",
+    "error",
 
-        "data",
-        "script",
-        "mods",
+    "data",
+    "script",
+    "mods",
 
-        "game",
-        "defines",
-        "prototypes",
-    },
+    "game",
+    "defines",
+    "prototypes",
+  },
 }
