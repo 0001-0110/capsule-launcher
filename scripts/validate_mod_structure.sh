@@ -9,7 +9,9 @@ error() {
 tag=${1:-}
 
 expected_version=${tag:-"[0-9]{1,5}\.[0-9]{1,5}\.[0-9]{1,5}"}
-expected_date=$([ -n "$tag" ] && date -I || echo "[0-9]{4}-[0-9]{2}-[0-9]{2}")
+# If this commit is tagged, the date must be today's date
+# If not, we only need to check that the Date line is present, as the date will be filled in later
+expected_date=$([ -n "$tag" ] && date -I || echo "")
 changelog_separator="---------------------------------------------------------------------------------------------------"
 
 [ -f info.json ] || error "Missing info.json"
