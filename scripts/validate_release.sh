@@ -1,6 +1,6 @@
 #!/bin/sh
 
-set -eux
+set -eu
 
 error() {
     echo "$1" && exit 99
