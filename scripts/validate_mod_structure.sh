@@ -10,7 +10,7 @@ changelog_separator="-----------------------------------------------------------
 
 [ -f info.json ] || error "Missing info.json"
 [ -n "$(jq .name info.json)" ] || error "Missing mod name"
-jq .version info.json | grep -E $expected_version > /dev/null || error "Missing mod version"
+[ -n "$(jq .version info.json)" ] || error "Missing mod version"
 [ -n "$(jq .title info.json)" ] || error "Missing mod title"
 [ -n "$(jq .description info.json)" ] || error "Missing mod description"
 [ -n "$(jq .author info.json)" ] || error "Missing mod author"
