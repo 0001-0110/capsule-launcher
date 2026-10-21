@@ -1,0 +1,14 @@
+when:
+  - event: pull_request
+    branch: main
+
+depends_on:
+  - validate-structure
+
+steps:
+
+  - name: validate-version
+    image: alpine
+    commands:
+      - apk add jq
+      - ./scripts/validate_release.sh
