@@ -35,6 +35,12 @@ Thank you for trying out the **Capsule launcher mod**! I hope it adds an excitin
 
 ---
 
+## AI Generated Content Disclosure
+
+This mod does not contains any AI generated code, but AI was used to generate some of the documentation, as well as all non english localization files.
+
+---
+
 ## Special thanks
 
   - Zantigar, for their numerous bug reports and help in fixing those issues.
