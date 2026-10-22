@@ -3,6 +3,7 @@ Version: 2.0.0
 Date: TODO
   Changes:
     - Bumped factorio version to 2.1
+    - Changed mod license to GNU GPLv3
   Bugfixes:
     - Fixed capsule ammo tooltip saying that the recipe was craftable by hand
     - Fixed all capsule ammo recipe names being called "grenade ammo"
