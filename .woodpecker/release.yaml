@@ -1,0 +1,23 @@
+when:
+  - event: push
+    branch: main
+
+depends_on:
+  - validate-release
+
+steps:
+
+  - name: package
+    image: alpine:3.24.3
+    commands:
+      - apk add make git jq
+      - make archive
+
+  - name: upload
+    image: python:3.10.21-alpine3.24
+    environment:
+      MOD_PORTAL_API_KEY:
+        from_secret: mod_portal_api_key
+    commands:
+      - pip install requests
+      - python scripts/upload.py *.zip
