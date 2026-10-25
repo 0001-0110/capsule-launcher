@@ -1,6 +1,6 @@
 ---------------------------------------------------------------------------------------------------
 Version: 2.0.0
-Date: TODO
+Date: 2026-10-25
   Changes:
     - Bumped factorio version to 2.1
     - Changed mod license to GNU GPLv3
