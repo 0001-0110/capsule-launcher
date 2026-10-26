@@ -13,7 +13,7 @@ local function create_item_prototype(capsule, projectile)
     ammo_category = ammo_category.name,
     icon = capsule.icon,
     subgroup = "ammo",
-    order = "e[capsule-ammo]-a[basic]",
+    order = "e[capsule-ammo]-a[" .. capsule.order .. "]",
     stack_size = 100,
     weight = 40000,
     drop_sound = {
