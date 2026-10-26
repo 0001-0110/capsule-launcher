@@ -15,7 +15,7 @@ local function create_item_prototype(capsule, projectile)
     subgroup = "ammo",
     order = "e[capsule-ammo]-a[basic]",
     stack_size = 100,
-    weight = 40000,
+    weight = capsule.weight,
     drop_sound = {
       aggregation = {
         max_count = 1,
