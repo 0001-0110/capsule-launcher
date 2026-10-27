@@ -12,6 +12,7 @@ local function create_item_prototype(capsule, projectile)
     ammo_type = projectile,
     ammo_category = ammo_category.name,
     icon = capsule.icon,
+    icons = capsule.icons,
     subgroup = "ammo",
     order = "e[capsule-ammo]-a[basic]",
     stack_size = 100,
