@@ -14,7 +14,7 @@ local function create_item_prototype(capsule)
     icon = capsule.icon,
     icons = capsule.icons,
     subgroup = "ammo",
-    order = "e[capsule-ammo]-a[basic]",
+    order = "e[capsule-ammo]-a[" .. capsule.order .. "]",
     stack_size = 100,
     weight = capsule.weight,
     drop_sound = capsule.drop_sound,

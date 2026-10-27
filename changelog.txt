@@ -5,6 +5,7 @@ Date:
     - Fixed the mod failing to load when a capsule has multiple icons
     - Fixed all capsule ammo having the exact same weight
     - Fixed capsule ammo item using a different sound effect from the capsule item
+    - Fixed Capsule ammo being in a different order than the basic capsules
 ---------------------------------------------------------------------------------------------------
 Version: 2.0.0
 Date: 2026-10-25
