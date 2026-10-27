@@ -4,12 +4,12 @@ local ammo_category = require("prototypes.ammo_category")
 
 --- @param capsule data.CapsulePrototype
 --- @return data.ItemPrototype
-local function create_item_prototype(capsule, projectile)
+local function create_item_prototype(capsule)
   return {
     name = utils.prefix(capsule.name .. "-ammo"),
     localised_name = { "item-name.22_cl_capsule-ammo", { "item-name." .. capsule.name } },
     type = "ammo",
-    ammo_type = projectile,
+    ammo_type = capsule.capsule_action.attack_parameters.ammo_type,
     ammo_category = ammo_category.name,
     icon = capsule.icon,
     icons = capsule.icons,
@@ -17,30 +17,9 @@ local function create_item_prototype(capsule, projectile)
     order = "e[capsule-ammo]-a[basic]",
     stack_size = 100,
     weight = capsule.weight,
-    drop_sound = {
-      aggregation = {
-        max_count = 1,
-        remove = true,
-      },
-      filename = "__base__/sound/item/ammo-large-inventory-move.ogg",
-      volume = 0.6,
-    },
-    inventory_move_sound = {
-      aggregation = {
-        max_count = 1,
-        remove = true,
-      },
-      filename = "__base__/sound/item/ammo-large-inventory-move.ogg",
-      volume = 0.6,
-    },
-    pick_sound = {
-      aggregation = {
-        max_count = 1,
-        remove = true,
-      },
-      filename = "__base__/sound/item/ammo-large-inventory-pickup.ogg",
-      volume = 0.7,
-    },
+    drop_sound = capsule.drop_sound,
+    inventory_move_sound = capsule.inventory_move_sound,
+    pick_sound = capsule.pick_sound,
   }
 end
 
@@ -127,8 +106,7 @@ local ammo_factory = {}
 --- @param capsule data.CapsulePrototype
 --- @return data.Prototype[]
 function ammo_factory.create_ammo_prototypes(capsule)
-  local projectile = capsule.capsule_action.attack_parameters.ammo_type
-  local item = create_item_prototype(capsule, projectile)
+  local item = create_item_prototype(capsule)
   local recipe = create_recipe_prototype(capsule.name, item)
   update_technologies(capsule, recipe)
   return { item, recipe }
