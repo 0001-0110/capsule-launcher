@@ -83,4 +83,11 @@ function utils.is_combat_robot_effect(effect)
   return effect.entity_name and utils.is_combat_robot(effect.entity_name)
 end
 
+--- @param player_index uint32
+--- @param shortcut_name string
+function utils.toggle_shortcut(player_index, shortcut_name)
+  local player = game.get_player(player_index)
+  player.set_shortcut_toggled(shortcut_name, not player.is_shortcut_toggled(shortcut_name))
+end
+
 return utils
